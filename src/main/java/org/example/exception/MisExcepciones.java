@@ -11,5 +11,8 @@ public class MisExcepciones extends RuntimeException {
     public static void usuarioNoEncontrado()   {
         throw new RuntimeException("El usuario no existe.");
 
+    }  public static void libroSinStock()   {
+        throw new RuntimeException("El libro solicitado no se encuentra disponible.");
+
     }
 }

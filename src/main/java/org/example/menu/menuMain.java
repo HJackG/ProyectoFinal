@@ -1,17 +1,19 @@
 package org.example.menu;
 
+import org.example.controller.bookController;
 import org.example.controller.userController;
-import org.example.entity.administrativo;
+import org.example.entity.book;
 import org.example.entity.cliente;
 import org.example.entity.persona;
-import org.example.repository.Config;
-import org.example.repository.configRepository;
+import org.example.repository.bookRepository;
+import org.example.repository.userRepository;
 
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class menuMain {
+
     private final String loginMenu = """
             Bienvenido!
             1. Loguearse
@@ -32,7 +34,6 @@ public class menuMain {
 
 
     private final Scanner scanner = new Scanner(System.in);
-
     private final userController userController = new userController();
 
     public void mainFlow() throws IOException {
@@ -60,9 +61,17 @@ public class menuMain {
         String passwordInput = scanner.nextLine();
 
         Optional<persona> p = userController.login(userdniInput, passwordInput);
-        if (p.isEmpty())
-        {
-            break;
+        if (p.isEmpty()) {
+
+        }
+        if (p.isPresent()) {
+            persona user = ((persona) p.get());
+
+            if (user instanceof cliente) {
+
+                userController.inicio((cliente) user);
+            }
+
         }
 
     }

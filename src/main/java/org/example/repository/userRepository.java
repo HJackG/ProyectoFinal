@@ -25,7 +25,8 @@ public class userRepository implements CRUD {
     }
 
     @Override
-    public void read(Object o) {
+    public Object read(Object o) {
+        return null;
     }
 
     @Override
