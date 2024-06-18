@@ -113,4 +113,20 @@ public class book {
         this.idBook = ++id;
         this.sold = sold;
     }
+
+    @Override
+    public String toString() {
+        return
+                "|Titulo: " + nameBook +"\n"+
+                        "| Autor: " + author +"|\n"+"|\n"+
+                        "| Sinopsis: " + synopsis +"|\n"+"|\n"+
+                        "| Editorial: " + publisher +
+                        "| Genero: " + genero +
+                        "| Idioma: " + language +"\n"+
+                        "| Puntaje: " + rate +
+                        "| Stock: " + stock +"\n"+
+                        "| ISBN: " + idBook +
+                        "| Vendidos: " + sold +
+                        "\n"+"\n";
+    }
 }

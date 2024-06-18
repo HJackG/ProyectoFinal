@@ -15,4 +15,6 @@ public class administrativo extends persona {
     public void viewStadistics (){
 
     }
+
+
 }

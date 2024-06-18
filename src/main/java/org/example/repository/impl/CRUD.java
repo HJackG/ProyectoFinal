@@ -1,5 +1,7 @@
 package org.example.repository.impl;
 
+import org.example.entity.administrativo;
+
 public interface CRUD<T> {
 
     T create();
@@ -10,5 +12,4 @@ public interface CRUD<T> {
 
     void delete(T t);
 
-    void Register(T t);
 }

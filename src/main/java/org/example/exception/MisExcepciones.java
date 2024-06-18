@@ -1,18 +1,25 @@
 package org.example.exception;
 
-import java.io.IOException;
 
 public class MisExcepciones extends RuntimeException {
 
-    public static void dniExistente()  {
-        throw new RuntimeException("El dni ya tiene una cuenta asociada.");
-
+    public MisExcepciones(String message) {
+        super(message);
     }
-    public static void usuarioNoEncontrado()   {
-        throw new RuntimeException("El usuario no existe.");
 
-    }  public static void libroSinStock()   {
-        throw new RuntimeException("El libro solicitado no se encuentra disponible.");
+    public static MisExcepciones usuarioNoEncontrado() {
+        return new MisExcepciones("El usuario no existe.");
+    }
 
+    public static MisExcepciones dniExistente() {
+        return new MisExcepciones("El DNI ya tiene una cuenta asociada.");
+    }
+
+    public static MisExcepciones libroSinStock() {
+        return new MisExcepciones("El libro solicitado no se encuentra disponible.");
+    }
+
+    public static MisExcepciones datoInvalido() {
+        return new MisExcepciones("Introdujo un dato que no corresponde.");
     }
 }

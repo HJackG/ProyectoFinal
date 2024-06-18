@@ -5,7 +5,8 @@ import java.util.*;
 
 public class cliente extends persona {
 
-    private ArrayList<book> currentlyBorrowedBook;
+
+    private ArrayList<book> currentlyBorrowedBook;//
     private Map<Integer, book> returnHistory;
     private Set<book> listFavBook;
 
@@ -41,5 +42,15 @@ public class cliente extends persona {
 
     public void setListFavBook(Set<book> listFavBook) {
         this.listFavBook = listFavBook;
+    }
+
+    @Override
+    public String toString() {
+        return        super.toString()+
+        "cliente{" +
+                "currentlyBorrowedBook=" + currentlyBorrowedBook +
+                ", returnHistory=" + returnHistory +
+                ", listFavBook=" + listFavBook +
+                '}';
     }
 }

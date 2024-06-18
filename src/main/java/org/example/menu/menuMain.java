@@ -1,12 +1,13 @@
 package org.example.menu;
 
-import org.example.controller.bookController;
 import org.example.controller.userController;
-import org.example.entity.book;
+import org.example.entity.administrativo;
 import org.example.entity.cliente;
 import org.example.entity.persona;
+import org.example.exception.MisExcepciones;
+import org.example.repository.administrativoRepository;
 import org.example.repository.bookRepository;
-import org.example.repository.userRepository;
+import org.example.repository.clienteRepository;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -17,8 +18,9 @@ public class menuMain {
     private final String loginMenu = """
             Bienvenido!
             1. Loguearse
-            2. Registrarse
-            3. Salir
+            2. Loguearse como ADM
+            3. Registrarse
+            4. Salir
             """;
     public final String requestNameMessage = "Ingrese su nombre: ";
     public final String requestDniMessage = "Ingrese su numero de DNI (sin puntos, ni coma): ";
@@ -34,48 +36,58 @@ public class menuMain {
 
 
     private final Scanner scanner = new Scanner(System.in);
-    private final userController userController = new userController();
+    private final userController userControl = new userController();
+    private final bookRepository bookRP = new bookRepository();
+    private final clienteRepository clienteRP = new clienteRepository();
+    private final administrativoRepository admRP = new administrativoRepository();
 
     public void mainFlow() throws IOException {
-        Boolean logged = false;
         Boolean exit = false;
-
+        cargarJson();
         while (!exit) {
             System.out.println(loginMenu);
             int menuOption = scanner.nextInt();
 
             switch (menuOption) {
                 case 1 -> loginFlow();
-                case 2 -> registerFlow();
-                case 3 -> exit = true;
+                case 2 -> loginFlowAdm();
+                case 3 -> registerFlow();
+                case 4 -> exit = true;
                 default -> System.out.println("Opción invalida");
             }
         }
+        finalizarPrograma();
     }
+
+
 
     private void loginFlow() {
         scanner.nextLine();
         System.out.println(requestDniMessage);
-        String userdniInput = scanner.nextLine();
+        String userDniInput = scanner.nextLine();
         System.out.println(requestPassswordMessage);
         String passwordInput = scanner.nextLine();
 
-        Optional<persona> p = userController.login(userdniInput, passwordInput);
-        if (p.isEmpty()) {
-
+        Optional<cliente> user = userControl.login(userDniInput, passwordInput);
+        if (user.isPresent()) {
+            cliente c = user.get();
+            userControl.inicio(c);
+        } else {
+            MisExcepciones.usuarioNoEncontrado();
         }
-        if (p.isPresent()) {
-            persona user = ((persona) p.get());
-
-            if (user instanceof cliente) {
-
-                userController.inicio((cliente) user);
-            }
-
-        }
-
     }
 
+    private void loginFlowAdm() {
+        scanner.nextLine();
+        System.out.println(requestDniMessage);
+        String userDniInput = scanner.nextLine();
+        System.out.println(requestPassswordMessage);
+        String passwordInput = scanner.nextLine();
+
+        //Optional<administrativo> user = userController.login2(userDniInput, passwordInput);
+
+
+    }
 
     private void registerFlow() throws IOException {
         scanner.nextLine();
@@ -104,10 +116,22 @@ public class menuMain {
         System.out.println(requestPassswordMessage);
         String passwordInput = scanner.nextLine();
 
-        userController.createPersona(dni, name, lastName, age, email, phone, adress, passwordInput);
+        userControl.createPersona(dni, name, lastName, age, email, phone, adress, passwordInput);
 
         System.out.println("Registrado exitosamente!");
     }
+    public void finalizarPrograma() {
+        bookRP.saveLibros();
+        clienteRP.saveClientes();
+        admRP.saveAdm();
 
+    }
+
+    public void cargarJson() {
+        bookRP.loadLibros();
+        clienteRP.loadClientes();
+        admRP.loadAdm();
+
+    }
 
 }

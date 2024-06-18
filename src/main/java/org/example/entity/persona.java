@@ -118,4 +118,22 @@ public abstract class persona {
 
     public persona() {
     }
+
+    @Override
+    public String toString() {
+        return ", idPersona=" + idPersona +
+                "dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", adress='" + adress + '\'' +
+                ", password='" + password + '\'' +
+                ", rol=" + rol +
+                '}';
+    }
+
+
+
 }
