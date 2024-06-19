@@ -43,7 +43,9 @@ public class menuMain {
 
     public void mainFlow() throws IOException {
         Boolean exit = false;
+
         cargarJson();
+
         while (!exit) {
             System.out.println(loginMenu);
             int menuOption = scanner.nextInt();
@@ -56,10 +58,9 @@ public class menuMain {
                 default -> System.out.println("Opción invalida");
             }
         }
+
         finalizarPrograma();
     }
-
-
 
     private void loginFlow() {
         scanner.nextLine();
@@ -92,29 +93,29 @@ public class menuMain {
     private void registerFlow() throws IOException {
         scanner.nextLine();
         System.out.println(requestDniMessage);
-        String dni = scanner.nextLine();
+        String dni = userControl.pedirDato();
 
         System.out.println(requestNameMessage);
-        String name = scanner.nextLine();
+        String name = userControl.pedirDato();
 
         System.out.println(requestlastNameMessage);
-        String lastName = scanner.nextLine();
+        String lastName = userControl.pedirDato();
 
         System.out.println(requestAgeMessage);
         Integer age = scanner.nextInt();
         scanner.nextLine();
 
         System.out.println(requestEmailMessage);
-        String email = scanner.nextLine();
+        String email = userControl.pedirDato();
 
         System.out.println(requestPhoneMessage);
-        String phone = scanner.nextLine();
+        String phone = userControl.pedirDato();
 
         System.out.println(requestAdressMessage);
-        String adress = scanner.nextLine();
+        String adress = userControl.pedirDato();
 
         System.out.println(requestPassswordMessage);
-        String passwordInput = scanner.nextLine();
+        String passwordInput = userControl.pedirDato();
 
         userControl.createPersona(dni, name, lastName, age, email, phone, adress, passwordInput);
 
@@ -124,14 +125,12 @@ public class menuMain {
         bookRP.saveLibros();
         clienteRP.saveClientes();
         admRP.saveAdm();
-
     }
 
     public void cargarJson() {
         bookRP.loadLibros();
         clienteRP.loadClientes();
         admRP.loadAdm();
-
     }
 
 }

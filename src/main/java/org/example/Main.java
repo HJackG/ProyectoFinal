@@ -1,15 +1,9 @@
 package org.example;
-
 import org.example.entity.book;
-import org.example.entity.cliente;
-import org.example.entity.persona;
 import org.example.menu.menuMain;
 import org.example.repository.bookRepository;
 import org.example.repository.clienteRepository;
-
 import java.io.IOException;
-import java.util.List;
-
 
 public class Main {
     private static final menuMain menu = new menuMain();

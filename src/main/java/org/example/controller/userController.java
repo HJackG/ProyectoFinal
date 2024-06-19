@@ -24,7 +24,32 @@ public class userController {
 
     public userController() {
     }
+    public String pedirDato() throws MisExcepciones {
+        String dato = scanner.nextLine();
+        if (!checkInput(dato)) {
+            System.out.println("Reingrese el dato.");
+            dato = pedirDato();
+        }
 
+        return dato;
+    }
+    public static boolean checkInput(String atributo) throws MisExcepciones {
+
+        try {
+            return validarScanner(atributo);
+        } catch (MisExcepciones miExcepcion) {
+            throw new MisExcepciones("Error al procesar el dato");
+        }
+    }
+    public static boolean validarScanner(String atributo) throws MisExcepciones {
+        boolean check = true;
+
+        if (atributo.trim().isEmpty() || atributo == null) {
+            System.out.println("El dato no puede estar vacio.");
+            check = false;
+        }
+        return check;
+    }
     public void inicio(cliente user) {
         boolean exit = false;
         List<book> libros = bookrepository.getListaLibros();
@@ -135,6 +160,7 @@ public class userController {
                 user.getCurrentlyBorrowedBook().add(aux.get(index));
                 book b = aux.get(index);
                 b.setStock(b.getStock() - 1);
+                ///analizar si esta en fav para eliminarlo
             } else {
                 throw new IndexOutOfBoundsException("Codigo de libro erroneo.");
             }
@@ -148,9 +174,9 @@ public class userController {
             if (config.getAdminPassword().equals(password)) {
                 System.out.println(menuMain.admMessage);
                 System.out.println(menuMain.requestPassswordMessage);
-                password = scanner.nextLine();
+                password = pedirDato();
                 System.out.println(menuMain.requestDepartamentMessage);
-                String departament = scanner.nextLine();
+                String departament = pedirDato();
                 System.out.println(requestSpeciliatydMessage);
                 String speciliaty = scanner.nextLine();
 
@@ -189,7 +215,7 @@ public class userController {
 
     }
 
-    /*public Optional<administrativo> login2(String dni, String password) {
+   /* public Optional<administrativo> login2(String dni, String password) {
         return Optional.ofNullable(user_Repository.findUser(dni))
                 .filter(administrativo -> administrativo.getPassword().equals(password))
                 .map(administrativo -> {
@@ -202,12 +228,6 @@ public class userController {
     public void logOut() {
 
     }
-
-    public void requestBook(Book book) {
-
-    }
-
-    public void returnBook(Book book) {
-
-    }
 }
+
+
