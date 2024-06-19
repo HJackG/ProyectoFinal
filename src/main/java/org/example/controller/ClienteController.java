@@ -38,8 +38,7 @@ public class ClienteController {
                 case 1 -> addBook(user, i, libros.get(i));
                 case 2 -> addBookFav(user, i);
                 case 3 -> i = anterior(i);
-                case 4 -> {
-                }
+                case 4 -> {}
                 case 5 -> perfil(user);
                 case 6 -> exit = true;
                 default -> System.out.println("Opción invalida");
@@ -191,14 +190,7 @@ public class ClienteController {
 
     }
 
-   /* public Optional<administrativo> login2(String dni, String password) {
-        return Optional.ofNullable(user_Repository.findUser(dni))
-                .filter(administrativo -> administrativo.getPassword().equals(password))
-                .map(administrativo -> {
-                    System.out.println("Ingreso exitoso");
-                    return administrativo;
-                });
-    }*/
+
 
 }
 

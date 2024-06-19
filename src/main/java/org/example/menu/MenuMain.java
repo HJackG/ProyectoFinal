@@ -1,6 +1,9 @@
 package org.example.menu;
 
+import org.example.controller.AdminController;
+import org.example.controller.BookController;
 import org.example.controller.ClienteController;
+import org.example.entity.Admin;
 import org.example.entity.Cliente;
 import org.example.exception.MisExcepciones;
 import org.example.repository.AdminRepository;
@@ -17,12 +20,19 @@ public class MenuMain {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    private final ClienteController clienteController = new ClienteController();
+    public final ClienteController clienteController = new ClienteController();
     private final ClienteRepository clienteRepository = new ClienteRepository();
 
     private final BookRepository bookRepository = new BookRepository();
+    private final BookController bookController = new BookController();
+    public AdminController adminController;
 
-    private final AdminRepository adminRepository = new AdminRepository();
+    public MenuMain(AdminController adminController)
+    {
+        this.adminController = adminController;
+        cargarJson();
+    }
+
 
 
 
@@ -54,7 +64,7 @@ public class MenuMain {
         finalizarPrograma();
     }
 
-    private void loginFlow() {
+    private void loginFlow() {//Inicio session cliente
         scanner.nextLine();
         System.out.println(requestDniMessage);
         String userDniInput = scanner.nextLine();
@@ -70,14 +80,20 @@ public class MenuMain {
         }
     }
 
-    private void loginFlowAdm() {
+    private void loginFlowAdm() {//Inicio session admin
         scanner.nextLine();
         System.out.println(requestDniMessage);
         String userDniInput = scanner.nextLine();
         System.out.println(requestPasswordMessage);
         String passwordInput = scanner.nextLine();
 
-        //Optional<administrativo> user = userController.login2(userDniInput, passwordInput);
+        Optional<Admin> admin = adminController.login(userDniInput, passwordInput);
+        if(admin.isPresent()) {
+            Admin a = admin.get();
+            adminController.inicio(a);
+        }else{
+            MisExcepciones.usuarioNoEncontrado();
+        }
     }
 
     private void registerFlow() {
@@ -90,13 +106,13 @@ public class MenuMain {
     public void finalizarPrograma() {
         bookRepository.saveLibros();
         clienteRepository.saveClientes();
-        adminRepository.saveAdm();
+        //adminRepository.saveAdm();
     }
 
     public void cargarJson() {
-        bookRepository.loadLibros();
+        //bookRepository.loadLibros();
         clienteRepository.loadClientes();
-        adminRepository.loadAdm();
+        adminController.loadAdm();
     }
 
 }

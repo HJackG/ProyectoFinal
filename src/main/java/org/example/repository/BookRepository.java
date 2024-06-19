@@ -15,11 +15,12 @@ public class BookRepository implements CRUD {
     private final String BOOK_PATH = "src/main/java/resources/books.json";
 
     Gson gson = new Gson();
+
     public static List<Book> listaLibros = new ArrayList<>();
 
 
     public BookRepository() {
-        listaLibros = new ArrayList<>();
+        loadLibros();
     }
 
     public List<Book> getListaLibros() {
@@ -30,6 +31,11 @@ public class BookRepository implements CRUD {
         this.listaLibros = listaLibros;
     }
 
+    public void addList(Book libro)
+    {
+        listaLibros.add(libro);
+        saveLibros();
+    }
 
     @Override
     public Object create() {
@@ -43,7 +49,6 @@ public class BookRepository implements CRUD {
                 return listaLibros.get((Integer) o);
             } else {
                 MisExcepciones.libroSinStock();
-
             }
         }
         return null;
@@ -67,8 +72,7 @@ public class BookRepository implements CRUD {
             if (listaLibros == null) {
                 listaLibros = new ArrayList<>();
             }
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
